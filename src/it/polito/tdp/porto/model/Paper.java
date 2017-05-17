@@ -1,5 +1,8 @@
 package it.polito.tdp.porto.model;
 
+import java.util.LinkedList;
+import java.util.List;
+
 public class Paper {
 
 	private int eprintid;
@@ -8,6 +11,7 @@ public class Paper {
 	private String publication;
 	private String type;
 	private String types;
+	private List<Author> authors ;
 
 	public Paper(int eprintid, String title, String issn, String publication, String type, String types) {
 		this.eprintid = eprintid;
@@ -16,6 +20,7 @@ public class Paper {
 		this.publication = publication;
 		this.type = type;
 		this.types = types;
+		this.authors = new LinkedList<>();
 	}
 
 	public int getEprintid() {
@@ -68,8 +73,7 @@ public class Paper {
 
 	@Override
 	public String toString() {
-		return "Paper [eprintid=" + eprintid + ", title=" + title + ", issn=" + issn + ", publication=" + publication
-				+ ", type=" + type + ", types=" + types + "]";
+		return this.eprintid + this.title + this.publication ;
 	}
 
 }

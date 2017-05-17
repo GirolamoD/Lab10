@@ -1,16 +1,21 @@
 package it.polito.tdp.porto.model;
 
+import java.util.List;
+import java.util.LinkedList;
+
 public class Author {
 
 	private int id;
 	private String lastname;
 	private String firstname;
+	private List<Paper> papers ;
 		
 	public Author(int id, String lastname, String firstname) {
 		super();
 		this.id = id;
 		this.lastname = lastname;
 		this.firstname = firstname;
+		this.papers = new LinkedList<>();
 	}
 
 	public int getId() {
@@ -44,6 +49,6 @@ public class Author {
 
 	@Override
 	public String toString() {
-		return "Author [id=" + id + ", lastname=" + lastname + ", firstname=" + firstname + "]";
+		return this.id + this.firstname + this.lastname;
 	}
 }

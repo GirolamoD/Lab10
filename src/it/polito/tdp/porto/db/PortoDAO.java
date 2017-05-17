@@ -122,6 +122,9 @@ public class PortoDAO {
 			ResultSet rs = st.executeQuery(sql3);
 			
 			while(rs.next()){
+				Paper p = articoli.get(rs.getInt("eprintid"));
+				Author a = autori.get(rs.getInt("authorid"));
+				
 			}
 			
 		} catch (SQLException e) {
