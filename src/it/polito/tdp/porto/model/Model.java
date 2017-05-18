@@ -8,6 +8,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import org.jgrapht.Graph;
 import org.jgrapht.Graphs;
 import org.jgrapht.alg.DijkstraShortestPath;
 import org.jgrapht.graph.DefaultEdge;
@@ -18,12 +19,12 @@ import it.polito.tdp.porto.db.PortoDAO;
 
 public class Model {
 	
-	private Multigraph<Author,PaperEdge> grafo ;
+	private SimpleGraph<Author,DefaultEdge> grafo ;
 	private Map<Integer,Author> autori ;
 	private Map<Integer,Paper> articoli ;
 	
 	public Model(){
-		this.grafo = new Multigraph<>(PaperEdge.class);
+		this.grafo = new SimpleGraph<>(DefaultEdge.class);
 		this.autori = new HashMap<>();
 		this.articoli = new HashMap<>();
 		PortoDAO dao = new PortoDAO();
@@ -34,8 +35,7 @@ public class Model {
 			for(int i=0 ; i<list.size()-1 ; i++)
 				for(int j=i+1 ; j<list.size() ; j++)
 					if(!list.get(i).equals(list.get(j))){
-						PaperEdge e = new PaperEdge(p);
-						grafo.addEdge(list.get(i), list.get(j),e);
+						grafo.addEdge(list.get(i), list.get(j));
 					}
 		}
 
@@ -62,15 +62,26 @@ public class Model {
 		if(Graphs.neighborListOf(grafo, primo).contains(secondo))
 			return "L'autore scelto è già un co-autore";
 		else {
-			DijkstraShortestPath<Author,PaperEdge> dsp = new DijkstraShortestPath(grafo,primo,secondo) ;
+			DijkstraShortestPath<Author,DefaultEdge> dsp = new DijkstraShortestPath(grafo,primo,secondo) ;
 			String s = "";
-			for(PaperEdge p : dsp.getPathEdgeList())
-				s+=p.toString();
+			for(DefaultEdge e : dsp.getPathEdgeList())
+				s+=this.findPaper(grafo.getEdgeSource(e), grafo.getEdgeTarget(e)).toString();
 			return s;
 		}
-		
 	}
+	
+	public Paper findPaper(Author a1 , Author a2){
+		for(Paper p1 : a1.getPapers())
+			for(Paper p2 : a2.getPapers())
+				if(p1.equals(p2))
+					return p1 ;
+		return null ;
+	}
+	
+}
+
+		
 	
 	
 
-}
+

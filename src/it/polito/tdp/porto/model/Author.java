@@ -55,6 +55,10 @@ public class Author implements Comparable<Author>{
 	public void addPaper (Paper p){
 		this.papers.add(p);
 	}
+	
+	public List<Paper> getPapers(){
+		return this.papers;
+	}
 
 	@Override
 	public int compareTo(Author o) {
