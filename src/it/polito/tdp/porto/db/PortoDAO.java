@@ -71,8 +71,7 @@ public class PortoDAO {
 		}
 	}
 
-	public void generaGrafo(SimpleGraph<Author, DefaultEdge> grafo, Map<Integer, Author> autori,
-			Map<Integer, Paper> articoli) {
+	public void caricaDati(Map<Integer, Author> autori, Map<Integer, Paper> articoli) {
 		
 		final String sql1 = "SELECT * FROM author";
 
@@ -82,7 +81,7 @@ public class PortoDAO {
 
 			ResultSet rs = st.executeQuery();
 
-			if (rs.next()) {
+			while (rs.next()) {
 
 				Author autore = new Author(rs.getInt("id"), rs.getString("lastname"), rs.getString("firstname"));
 				autori.put(autore.getId(),autore);
@@ -102,7 +101,7 @@ public class PortoDAO {
 
 			ResultSet rs = st.executeQuery();
 
-			if (rs.next()) {
+			while (rs.next()) {
 				Paper paper = new Paper(rs.getInt("eprintid"), rs.getString("title"), rs.getString("issn"),
 						rs.getString("publication"), rs.getString("type"), rs.getString("types"));
 				articoli.put(paper.getEprintid(), paper);
@@ -124,6 +123,8 @@ public class PortoDAO {
 			while(rs.next()){
 				Paper p = articoli.get(rs.getInt("eprintid"));
 				Author a = autori.get(rs.getInt("authorid"));
+				p.addAuthor(a);
+				a.addPaper(p);
 				
 			}
 			
@@ -134,4 +135,6 @@ public class PortoDAO {
 		
 
 	}
+
+		
 }

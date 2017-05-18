@@ -24,7 +24,7 @@ public class PortoController {
     private ComboBox<Author> boxPrimo;
 
     @FXML
-    private ComboBox<?> boxSecondo;
+    private ComboBox<Author> boxSecondo;
 
     @FXML
     private TextArea txtResult;
@@ -37,7 +37,8 @@ public class PortoController {
 
     @FXML
     void handleSequenza(ActionEvent event) {
-
+    	txtResult.clear();
+    	txtResult.setText(model.getSequenza(boxPrimo.getValue(),boxSecondo.getValue()));
     }
 
     @FXML
@@ -51,5 +52,6 @@ public class PortoController {
 	public void setModel(Model m) {
 		this.model=m ;
 		boxPrimo.getItems().addAll(model.getAutori());
+		boxSecondo.getItems().addAll(model.getAutori());
 	}
 }

@@ -3,7 +3,7 @@ package it.polito.tdp.porto.model;
 import java.util.List;
 import java.util.LinkedList;
 
-public class Author {
+public class Author implements Comparable<Author>{
 
 	private int id;
 	private String lastname;
@@ -49,6 +49,17 @@ public class Author {
 
 	@Override
 	public String toString() {
-		return this.id + this.firstname + this.lastname;
+		return this.id + " " +  this.lastname + " " + this.firstname +"\n";
+	}
+	
+	public void addPaper (Paper p){
+		this.papers.add(p);
+	}
+
+	@Override
+	public int compareTo(Author o) {
+		if(this.lastname.compareTo(o.lastname)!=0)
+			return this.lastname.compareTo(o.lastname);
+		return this.firstname.compareTo(o.firstname);
 	}
 }
